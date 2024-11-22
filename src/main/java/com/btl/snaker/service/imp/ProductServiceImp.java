@@ -11,9 +11,8 @@ public interface ProductServiceImp {
     ResponseData createProduct(CreateProductRequest createProductRequest);
     ResponseData updateProduct(UpdateProductRequest updateProductRequest);
     ResponseData deleteProduct(long id, Integer size);
-    ResponseData getAllProductsByAdmin(int page);
     List<ProductDTO> getAllProducts();
     ProductDTO getProductById(long id);
     List<ProductDTO> getProducts(Long categoryId, Long brandId, Long priceFrom, Long priceTo, String name);
-    ResponseData getProductByName(String name, int page);
+    ResponseData getProductByName(String name);
 }

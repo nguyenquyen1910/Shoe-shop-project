@@ -34,9 +34,8 @@ public class ProductController {
     }
 
     @GetMapping("/admin/search")
-    public ResponseEntity<?> getProductBySearch(@RequestParam String name,
-                                                @RequestParam(defaultValue = "0") int page) {
-        return new ResponseEntity<>(productServiceImp.getProductByName(name, page), HttpStatus.OK);
+    public ResponseEntity<?> getProductBySearch(@RequestParam String name) {
+        return new ResponseEntity<>(productServiceImp.getProductByName(name), HttpStatus.OK);
     }
 
     @GetMapping("/user/search")
@@ -57,11 +56,6 @@ public class ProductController {
             responseData.setDescription("Fail");
         }
         return new ResponseEntity<>(responseData, HttpStatus.OK);
-    }
-
-    @GetMapping("/admin/all")
-    public ResponseEntity<?> getAllByAdmin(@RequestParam(defaultValue = "0") int page) {
-        return new ResponseEntity<>(productServiceImp.getAllProductsByAdmin(page), HttpStatus.OK);
     }
 
     @PostMapping("/admin/create")

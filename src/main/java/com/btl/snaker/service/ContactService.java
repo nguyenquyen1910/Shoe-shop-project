@@ -1,16 +1,12 @@
 package com.btl.snaker.service;
 
 import com.btl.snaker.dto.ContactDTO;
-import com.btl.snaker.dto.PageContactDTO;
 import com.btl.snaker.entity.Contact;
 import com.btl.snaker.payload.ResponseData;
 import com.btl.snaker.payload.request.ContactRequest;
 import com.btl.snaker.repository.ContactRepository;
 import com.btl.snaker.service.imp.ContactServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,12 +20,11 @@ public class ContactService implements ContactServiceImp {
     private ContactRepository contactRepository;
 
     @Override
-    public ResponseData getAllContacts(int page) {
+    public ResponseData getAllContacts() {
         ResponseData responseData = new ResponseData();
-        Pageable pageable = PageRequest.of(page, 10);
-        Page<Contact> contactPages = contactRepository.findAll(pageable);
+        List<Contact> contacts = contactRepository.findAll();
         List<ContactDTO> contactDTOs = new ArrayList<>();
-        for(Contact contact : contactPages.getContent()) {
+        for(Contact contact : contacts) {
             ContactDTO contactDTO = new ContactDTO();
             contactDTO.setId(contact.getId());
             contactDTO.setFullName(contact.getFullName());
@@ -39,9 +34,8 @@ public class ContactService implements ContactServiceImp {
             contactDTO.setStatus(contact.isRead() ? "Đã đọc" : "Chưa đọc");
             contactDTOs.add(contactDTO);
         }
-        PageContactDTO pageContactDTO = new PageContactDTO(contactDTOs, contactPages.getNumber(), contactPages.getTotalElements());
         responseData.setSuccess(true);
-        responseData.setData(pageContactDTO);
+        responseData.setData(contactDTOs);
         return responseData;
     }
 

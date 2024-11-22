@@ -3,7 +3,6 @@ package com.btl.snaker.controller;
 import com.btl.snaker.payload.ResponseData;
 import com.btl.snaker.service.imp.UserServiceImp;
 import com.btl.snaker.utils.JwtUtilHelper;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +16,6 @@ public class UserController {
     @Autowired
     private UserServiceImp userServiceImp;
 
-    @Autowired
-    private JwtUtilHelper jwtUtilHelper;
-
     @GetMapping("/user/all")
     public ResponseEntity<?> getAllUsers() {
         ResponseData responseData = new ResponseData();
@@ -28,30 +24,9 @@ public class UserController {
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 
-    private String getTokenFromHeader(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        if (header != null && header.startsWith("Bearer ")) {
-            return header.substring(7);
-        }
-        return null;
-    }
-
-    @GetMapping("/admin/all")
-    public ResponseEntity<?> getAllUserByAdmin(@RequestParam(defaultValue = "0") int page) {
-        ResponseData responseData = userServiceImp.getAllUserByAdmin(page);
-        return new ResponseEntity<>(responseData, HttpStatus.OK);
-    }
-
     @GetMapping("/user/me")
-    public ResponseEntity<?> getCurrentUser(HttpServletRequest httpServletRequest) {
-        ResponseData responseData = new ResponseData();
-        String token = getTokenFromHeader(httpServletRequest);
-        if(token != null && jwtUtilHelper.verifyToken(token)) {
-            String email = jwtUtilHelper.extractEmail(token);
-            if(email != null) {
-                responseData = userServiceImp.getUserByEmail(email);
-            }
-        }
+    public ResponseEntity<?> getCurrentUser(@RequestParam long id) {
+        ResponseData responseData = userServiceImp.getUserById(id);
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 

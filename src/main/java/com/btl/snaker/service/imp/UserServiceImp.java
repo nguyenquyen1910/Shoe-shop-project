@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface UserServiceImp {
     List<UserDTO> getAllUsers();
-    ResponseData getAllUserByAdmin(int page);
     ResponseData getUserById(long id);
     ResponseData getUserByEmail(String email);
     Boolean deleteUser(long id);

@@ -1,6 +1,5 @@
 package com.btl.snaker.service;
 
-import com.btl.snaker.dto.PageUserDTO;
 import com.btl.snaker.dto.UserDTO;
 import com.btl.snaker.entity.Role;
 import com.btl.snaker.entity.User;
@@ -9,9 +8,6 @@ import com.btl.snaker.payload.ResponseData;
 import com.btl.snaker.repository.UserRepository;
 import com.btl.snaker.service.imp.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,17 +26,6 @@ public class UserService implements UserServiceImp {
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return UserMapper.toDTOList(users);
-    }
-
-    @Override
-    public ResponseData getAllUserByAdmin(int page) {
-        ResponseData responseData = new ResponseData();
-        Pageable pageable = PageRequest.of(page, 10);
-        Page<User> userPage = userRepository.findAll(pageable);
-        PageUserDTO pageUserDTO = new PageUserDTO(UserMapper.toDTOList(userPage.getContent()), userPage.getTotalPages(), userPage.getTotalElements());
-        responseData.setData(pageUserDTO);
-        responseData.setSuccess(true);
-        return responseData;
     }
 
     @Override

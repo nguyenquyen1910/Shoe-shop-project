@@ -1,6 +1,5 @@
 package com.btl.snaker.controller;
 
-import com.btl.snaker.entity.Contact;
 import com.btl.snaker.payload.request.ContactRequest;
 import com.btl.snaker.service.imp.ContactServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,8 @@ public class ContactController {
     private ContactServiceImp contactServiceImp;
 
     @GetMapping("/admin/all")
-    public ResponseEntity<?> getAllContacts(@RequestParam(defaultValue = "0") int page) {
-        return new ResponseEntity<>(contactServiceImp.getAllContacts(page), HttpStatus.OK);
+    public ResponseEntity<?> getAllContacts() {
+        return new ResponseEntity<>(contactServiceImp.getAllContacts(), HttpStatus.OK);
     }
 
     @GetMapping("/user/get")

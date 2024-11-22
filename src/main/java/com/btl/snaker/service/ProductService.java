@@ -1,6 +1,5 @@
 package com.btl.snaker.service;
 
-import com.btl.snaker.dto.PageProductDTO;
 import com.btl.snaker.dto.ProductDTO;
 import com.btl.snaker.entity.Brand;
 import com.btl.snaker.entity.Category;
@@ -17,9 +16,6 @@ import com.btl.snaker.repository.ProductRepository;
 import com.btl.snaker.repository.ProductSizeRepository;
 import com.btl.snaker.service.imp.ProductServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -176,19 +172,6 @@ public class ProductService implements ProductServiceImp {
     }
 
     @Override
-    public ResponseData getAllProductsByAdmin(int page) {
-        ResponseData responseData = new ResponseData();
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<Product> products = productRepository.findAll(pageable);
-        List<ProductDTO> productDTOS = ProductMapper.productListToProductDTOList(products.getContent());
-        PageProductDTO pageProductDTO = new PageProductDTO(productDTOS, products.getTotalPages(), products.getTotalElements());
-        responseData.setSuccess(true);
-        responseData.setDescription("Success");
-        responseData.setData(pageProductDTO);
-        return responseData;
-    }
-
-    @Override
     public List<ProductDTO> getAllProducts() {
         return ProductMapper.productListToProductDTOList(productRepository.findAll());
     }
@@ -205,14 +188,12 @@ public class ProductService implements ProductServiceImp {
     }
 
     @Override
-    public ResponseData getProductByName(String name, int page) {
+    public ResponseData getProductByName(String name) {
         ResponseData responseData = new ResponseData();
-        Pageable pageable = PageRequest.of(page, 5);
-        Page<Product> productPage = productRepository.findByNameContaining(name, pageable);
-        List<ProductDTO> productDTOList = ProductMapper.productListToProductDTOList(productPage.getContent());
-        PageProductDTO pageProductDTO = new PageProductDTO(productDTOList, productPage.getTotalPages(), productPage.getTotalElements());
+        List<Product> products = productRepository.findByNameContaining(name);
+        List<ProductDTO> productDTOList = ProductMapper.productListToProductDTOList(products);
         responseData.setSuccess(true);
-        responseData.setData(pageProductDTO);
+        responseData.setData(productDTOList);
         return responseData;
     }
 }

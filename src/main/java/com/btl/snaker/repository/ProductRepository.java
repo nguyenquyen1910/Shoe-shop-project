@@ -24,5 +24,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                                                             String name);
     Product findById(long id);
     @Query(value = "SELECT * FROM product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))", nativeQuery = true)
-    Page<Product> findByNameContaining(@Param("name") String name, Pageable pageable);
+    List<Product> findByNameContaining(@Param("name") String name);
 }
