@@ -30,8 +30,8 @@ public class CustomFilterSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .csrf(csrf -> csrf.disable());
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+        http.csrf(csrf -> csrf.disable());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(customJwtFilter, UsernamePasswordAuthenticationFilter.class);
         http.authorizeHttpRequests(authorize -> authorize
@@ -59,7 +59,7 @@ public class CustomFilterSecurity {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500", "http://127.0.0.1:3000", "http://127.0.0.1:5501"));
+        configuration.setAllowedOrigins(List.of("http://127.0.0.1:5500", "http://127.0.0.1:3000", "http://127.0.0.1:5501", "http://localhost:3000", "http://localhost:3001"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
@@ -68,6 +68,7 @@ public class CustomFilterSecurity {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -8,7 +8,7 @@ public class UserDTO {
     private String token;
     private String address;
     private String phone;
-    private String active;
+    private Integer isActive;
 
     public Long getId() {
         return id;
@@ -66,11 +66,11 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public String getActive() {
-        return active;
+    public Integer getIsActive() {
+        return isActive;
     }
 
-    public void setActive(String active) {
-        this.active = active;
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 }

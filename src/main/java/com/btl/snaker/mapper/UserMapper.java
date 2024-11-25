@@ -16,12 +16,7 @@ public class UserMapper {
         userDTO.setToken(user.getToken());
         userDTO.setAddress(user.getAddress());
         userDTO.setPhone(user.getPhone());
-        if(user.getActive()==1){
-            userDTO.setActive("Kích hoạt");
-        }
-        else{
-            userDTO.setActive("Vô hiệu hóa");
-        }
+        userDTO.setIsActive(user.getActive());
         return userDTO;
     }
     public static List<UserDTO> toDTOList(List<User> usersList) {
