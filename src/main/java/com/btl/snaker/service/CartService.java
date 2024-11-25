@@ -1,6 +1,7 @@
 package com.btl.snaker.service;
 
 import com.btl.snaker.dto.CartDTO;
+import com.btl.snaker.dto.CartFlatDTO;
 import com.btl.snaker.dto.CartItemDTO;
 import com.btl.snaker.entity.*;
 import com.btl.snaker.payload.ResponseData;
@@ -49,28 +50,23 @@ public class CartService implements CartServiceImp {
             cart.setCartItems(new ArrayList<>());
             cartRepository.save(cart);
         }
-        CartDTO cartDTO = new CartDTO();
-        cartDTO.setId(cart.getId());
-        List<CartItemDTO> cartItemDTOS = new ArrayList<>();
+        List<CartFlatDTO> cartFlatDTOS = new ArrayList<>();
         for(CartItem cartItem : cart.getCartItems()){
-            CartItemDTO cartItemDTO = new CartItemDTO();
-            cartItemDTO.setProductId(cartItem.getProduct().getId());
-            cartItemDTO.setProductImage(String.valueOf(cartItem.getProduct().getImage()));
-            cartItemDTO.setProductName(cartItem.getProduct().getName());
-            cartItemDTO.setProductDescription(cartItem.getProduct().getDescription());
-            cartItemDTO.setProductBrand(cartItem.getProduct().getBrand().getName());
-            cartItemDTO.setProductCategory(cartItem.getProduct().getCategory().getName());
-            cartItemDTO.setProductPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
-            cartItemDTO.setProductSize(cartItem.getSize());
-            cartItemDTO.setProductQuantity(cartItem.getQuantity());
-            cartItemDTOS.add(cartItemDTO);
+            CartFlatDTO cartFlatDTO = new CartFlatDTO();
+            cartFlatDTO.setId(cart.getId());
+            cartFlatDTO.setUserId(user.getId());
+            cartFlatDTO.setProductId(cartItem.getProduct().getId());
+            cartFlatDTO.setProductImage(cartItem.getProduct().getImage());
+            cartFlatDTO.setProductName(cartItem.getProduct().getName());
+            cartFlatDTO.setProductDescription(cartItem.getProduct().getDescription());
+            cartFlatDTO.setProductBrand(cartItem.getProduct().getBrand().getName());
+            cartFlatDTO.setProductCategory(cartItem.getProduct().getCategory().getName());
+            cartFlatDTO.setProductPrice(cartItem.getProduct().getPrice());
+            cartFlatDTO.setProductQuantity(cartItem.getQuantity());
+            cartFlatDTO.setProductSize(cartItem.getSize());
+            cartFlatDTOS.add(cartFlatDTO);
         }
-        cartDTO.setCartItemDTOS(cartItemDTOS);
-        long totalAmount = cartItemDTOS.stream()
-                .mapToLong(item -> item.getProductPrice())
-                .sum();
-        cartDTO.setTotalAmount(totalAmount);
-        responseData.setData(cartDTO);
+        responseData.setData(cartFlatDTOS);
         responseData.setSuccess(true);
         return responseData;
     }

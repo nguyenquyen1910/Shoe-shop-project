@@ -1,7 +1,6 @@
 package com.btl.snaker.service;
 
 import com.btl.snaker.dto.OrderDTO;
-import com.btl.snaker.dto.OrderFlatDTO;
 import com.btl.snaker.dto.ProductSellDTO;
 import com.btl.snaker.entity.*;
 import com.btl.snaker.entity.key.KeyOrderItem;
@@ -10,7 +9,6 @@ import com.btl.snaker.payload.request.OrderItemRequest;
 import com.btl.snaker.payload.request.OrderRequest;
 import com.btl.snaker.repository.*;
 import com.btl.snaker.service.imp.OrderServiceImp;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,27 +38,35 @@ public class OrderService implements OrderServiceImp {
     public ResponseData getAllOrders() {
         ResponseData responseData = new ResponseData();
         List<Order> orders = orderRepository.findAll();
-        List<OrderFlatDTO> orderFlatDTOs = new ArrayList<>();
+        List<OrderDTO> orderDTOS = new ArrayList<>();
         for(Order order : orders) {
             for(OrderItem item : order.getOrderItems()) {
-                OrderFlatDTO orderFlatDTO = new OrderFlatDTO();
-                orderFlatDTO.setProductName(item.getProduct().getName());
-                orderFlatDTO.setProductDescription(item.getProduct().getDescription());
-                orderFlatDTO.setProductSize(item.getSize());
-                orderFlatDTO.setTotalAmount(item.getPrice() * item.getQuantity());
-                orderFlatDTO.setFullName(order.getFullName());
-                orderFlatDTO.setPhoneNumber(order.getPhoneNumber());
-                orderFlatDTO.setEmail(order.getEmail());
-                orderFlatDTO.setAddress(order.getAddress());
-                orderFlatDTO.setShippingMethod(order.getShippingMethod());
-                orderFlatDTO.setDeliveryTime(order.getDeliveryTime());
-                orderFlatDTO.setNote(order.getNote());
-                orderFlatDTO.setStatus(order.getStatus() == 1 ? "Hoàn thành" : "Chờ xử lý");
-                orderFlatDTOs.add(orderFlatDTO);
+                OrderDTO orderDTO = new OrderDTO();
+                orderDTO.setId(order.getId());
+                orderDTO.setUserId(order.getUser().getId());
+                orderDTO.setProductId(item.getProduct().getId());
+                orderDTO.setProductImage(item.getProduct().getImage());
+                orderDTO.setProductName(item.getProduct().getName());
+                orderDTO.setProductDescription(item.getProduct().getDescription());
+                orderDTO.setProductBrand(item.getProduct().getBrand().getName());
+                orderDTO.setProductCategory(item.getProduct().getCategory().getName());
+                orderDTO.setProductPrice(item.getProduct().getPrice());
+                orderDTO.setProductQuantity(item.getQuantity());
+                orderDTO.setProductSize(item.getSize());
+                orderDTO.setShippingMethod(order.getShippingMethod());
+                orderDTO.setPickupTime(order.getDeliveryTime());
+                orderDTO.setNotes(order.getNote());
+                orderDTO.setFullName(order.getFullName());
+                orderDTO.setPhone(order.getPhoneNumber());
+                orderDTO.setEmail(order.getEmail());
+                orderDTO.setAddress(order.getAddress());
+                orderDTO.setStatus(order.getStatus() == 1 ? "Hoàn thành" : "Chờ xử lý");
+                orderDTO.setTime(formatDateTime(order.getCreatedAt()));
+                orderDTOS.add(orderDTO);
             }
         }
         responseData.setSuccess(true);
-        responseData.setData(orderFlatDTOs);
+        responseData.setData(orderDTOS);
         return responseData;
     }
 
@@ -89,18 +95,25 @@ public class OrderService implements OrderServiceImp {
             for(OrderItem item : order.getOrderItems()) {
                 OrderDTO orderDTO = new OrderDTO();
                 orderDTO.setId(order.getId());
+                orderDTO.setUserId(order.getUser().getId());
                 orderDTO.setProductId(item.getProduct().getId());
-                orderDTO.setProductName(item.getProduct().getName());
                 orderDTO.setProductImage(item.getProduct().getImage());
+                orderDTO.setProductName(item.getProduct().getName());
                 orderDTO.setProductDescription(item.getProduct().getDescription());
                 orderDTO.setProductBrand(item.getProduct().getBrand().getName());
                 orderDTO.setProductCategory(item.getProduct().getCategory().getName());
-                orderDTO.setProductSize(item.getSize());
                 orderDTO.setProductPrice(item.getProduct().getPrice());
                 orderDTO.setProductQuantity(item.getQuantity());
-                orderDTO.setTotalAmount(item.getPrice() * item.getQuantity());
-                orderDTO.setTimePay(formatDateTime(order.getCreatedAt()));
+                orderDTO.setProductSize(item.getSize());
+                orderDTO.setShippingMethod(order.getShippingMethod());
+                orderDTO.setPickupTime(order.getDeliveryTime());
+                orderDTO.setNotes(order.getNote());
+                orderDTO.setFullName(order.getFullName());
+                orderDTO.setPhone(order.getPhoneNumber());
+                orderDTO.setEmail(order.getEmail());
+                orderDTO.setAddress(order.getAddress());
                 orderDTO.setStatus(order.getStatus() == 1 ? "Hoàn thành" : "Chờ xử lý");
+                orderDTO.setTime(formatDateTime(order.getCreatedAt()));
                 orderDTOS.add(orderDTO);
             }
         }

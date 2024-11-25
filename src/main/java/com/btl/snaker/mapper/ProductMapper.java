@@ -27,6 +27,7 @@ public class ProductMapper {
         productDTO.setSize(productSizeDTOS);
         productDTO.setGender(product.getGender());
         productDTO.setImage(product.getImage());
+        productDTO.setPrice(product.getPrice());
         return productDTO;
     }
     public static List<ProductDTO> productListToProductDTOList(List<Product> productList) {

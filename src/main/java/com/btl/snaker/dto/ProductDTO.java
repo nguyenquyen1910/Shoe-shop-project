@@ -12,6 +12,7 @@ public class ProductDTO {
     private String category;
     private String gender;
     private String image;
+    private Long price;
 
     public Long getId() {
         return id;
@@ -75,5 +76,13 @@ public class ProductDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }

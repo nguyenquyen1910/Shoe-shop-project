@@ -2,6 +2,7 @@ package com.btl.snaker.dto;
 
 public class OrderDTO {
     private long id;
+    private long userId;
     private long productId;
     private String productImage;
     private String productName;
@@ -11,8 +12,14 @@ public class OrderDTO {
     private int productSize;
     private long productPrice;
     private int productQuantity;
-    private long totalAmount;
-    private String timePay;
+    private String shippingMethod;
+    private String pickupTime;
+    private String notes;
+    private String fullName;
+    private String phone;
+    private String email;
+    private String address;
+    private String time;
     private String status;
 
     public long getId() {
@@ -95,20 +102,76 @@ public class OrderDTO {
         this.productQuantity = productQuantity;
     }
 
-    public long getTotalAmount() {
-        return totalAmount;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setTotalAmount(long totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public String getTimePay() {
-        return timePay;
+    public String getShippingMethod() {
+        return shippingMethod;
     }
 
-    public void setTimePay(String timePay) {
-        this.timePay = timePay;
+    public void setShippingMethod(String shippingMethod) {
+        this.shippingMethod = shippingMethod;
+    }
+
+    public String getPickupTime() {
+        return pickupTime;
+    }
+
+    public void setPickupTime(String pickupTime) {
+        this.pickupTime = pickupTime;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getStatus() {
