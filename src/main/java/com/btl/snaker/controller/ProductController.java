@@ -71,9 +71,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/admin/delete")
-    public ResponseEntity<?> deleteProduct(@RequestParam long id,
-                                           @RequestParam Integer size) {
-        ResponseData responseData = productServiceImp.deleteProduct(id, size);
+    public ResponseEntity<?> deleteProduct(@RequestParam long id) {
+        ResponseData responseData = productServiceImp.deleteProduct(id);
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 

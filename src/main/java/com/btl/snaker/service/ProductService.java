@@ -145,7 +145,7 @@ public class ProductService implements ProductServiceImp {
     }
 
     @Override
-    public ResponseData deleteProduct(long id, Integer size) {
+    public ResponseData deleteProduct(long id) {
         ResponseData responseData = new ResponseData();
         try {
             Product product = productRepository.findById(id);
@@ -154,13 +154,7 @@ public class ProductService implements ProductServiceImp {
                 responseData.setDescription("Product Not Found");
                 return responseData;
             }
-            ProductSize productSize = productSizeRepository.findByProductAndSize(product, size);
-            if(productSize==null){
-                responseData.setSuccess(false);
-                responseData.setDescription("Size of Product Not Found");
-                return responseData;
-            }
-            productSizeRepository.delete(productSize);
+            productRepository.delete(product);
             responseData.setSuccess(true);
             responseData.setDescription("Success");
         } catch (Exception e) {
