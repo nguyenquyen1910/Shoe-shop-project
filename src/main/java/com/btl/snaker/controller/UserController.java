@@ -2,7 +2,6 @@ package com.btl.snaker.controller;
 
 import com.btl.snaker.payload.ResponseData;
 import com.btl.snaker.service.imp.UserServiceImp;
-import com.btl.snaker.utils.JwtUtilHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +43,10 @@ public class UserController {
         return new ResponseEntity<>(userServiceImp.updateInformation(id, phone, address), HttpStatus.OK);
     }
 
-    @PostMapping("/admin/assign/{id}")
+    @PostMapping("/admin/restore/{id}")
     public ResponseEntity<?> assignUserToAdmin(@PathVariable long id) {
         ResponseData responseData = new ResponseData();
-        responseData.setSuccess(userServiceImp.assignUser(id));
+        responseData.setSuccess(userServiceImp.restoreUser(id));
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
 

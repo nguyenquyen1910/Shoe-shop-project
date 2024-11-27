@@ -68,12 +68,10 @@ public class UserService implements UserServiceImp {
     }
 
     @Override
-    public Boolean assignUser(long id) {
+    public Boolean restoreUser(long id) {
         User user = userRepository.findById(id);
         if(user != null) {
-            Role role = new Role();
-            role.setId((long) 1);
-            user.setRole(role);
+            user.setActive(1);
             userRepository.save(user);
             return true;
         }

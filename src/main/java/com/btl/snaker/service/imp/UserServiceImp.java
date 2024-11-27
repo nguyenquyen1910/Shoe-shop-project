@@ -10,7 +10,7 @@ public interface UserServiceImp {
     ResponseData getUserById(long id);
     ResponseData getUserByEmail(String email);
     Boolean deleteUser(long id);
-    Boolean assignUser(long id);
+    Boolean restoreUser(long id);
     ResponseData changePassword(long id, String oldPassword, String newPassword);
     ResponseData updateInformation(long id, String phone, String address);
 }
