@@ -57,23 +57,19 @@ public class UserService implements UserServiceImp {
     }
 
     @Override
-    public Boolean deleteUser(long id) {
+    public Boolean handleUser(long id) {
         User user = userRepository.findById(id);
         if(user != null) {
-            user.setActive(0);
-            userRepository.save(user);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public Boolean restoreUser(long id) {
-        User user = userRepository.findById(id);
-        if(user != null) {
-            user.setActive(1);
-            userRepository.save(user);
-            return true;
+            if(user.getActive() == 0){
+                user.setActive(1);
+                userRepository.save(user);
+                return true;
+            }
+            else{
+                user.setActive(0);
+                userRepository.save(user);
+                return true;
+            }
         }
         return false;
     }

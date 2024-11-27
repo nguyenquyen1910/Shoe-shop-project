@@ -9,8 +9,7 @@ public interface UserServiceImp {
     List<UserDTO> getAllUsers();
     ResponseData getUserById(long id);
     ResponseData getUserByEmail(String email);
-    Boolean deleteUser(long id);
-    Boolean restoreUser(long id);
+    Boolean handleUser(long id);
     ResponseData changePassword(long id, String oldPassword, String newPassword);
     ResponseData updateInformation(long id, String phone, String address);
 }

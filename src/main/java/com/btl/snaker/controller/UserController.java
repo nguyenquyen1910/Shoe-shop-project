@@ -43,17 +43,10 @@ public class UserController {
         return new ResponseEntity<>(userServiceImp.updateInformation(id, phone, address), HttpStatus.OK);
     }
 
-    @PostMapping("/admin/restore/{id}")
-    public ResponseEntity<?> assignUserToAdmin(@PathVariable long id) {
-        ResponseData responseData = new ResponseData();
-        responseData.setSuccess(userServiceImp.restoreUser(id));
-        return new ResponseEntity<>(responseData, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/admin/delete/{id}")
+    @PostMapping("/admin/handle/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable long id) {
         ResponseData responseData=new ResponseData();
-        boolean isSuccess = userServiceImp.deleteUser(id);
+        boolean isSuccess = userServiceImp.handleUser(id);
         responseData.setData(isSuccess);
         return new ResponseEntity<>(responseData, HttpStatus.OK);
     }
