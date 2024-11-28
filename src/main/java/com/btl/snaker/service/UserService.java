@@ -88,11 +88,6 @@ public class UserService implements UserServiceImp {
             responseData.setDescription("Wrong password");
             return responseData;
         }
-        if(!passwordEncoder.matches(newPassword, user.getPassword())) {
-            responseData.setSuccess(false);
-            responseData.setDescription("Exist password");
-            return responseData;
-        }
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
         responseData.setSuccess(true);
