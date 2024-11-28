@@ -54,6 +54,7 @@ public class CartService implements CartServiceImp {
         for(CartItem cartItem : cart.getCartItems()){
             CartFlatDTO cartFlatDTO = new CartFlatDTO();
             cartFlatDTO.setId(cart.getId());
+            cartFlatDTO.setCartItemId(cartItem.getId());
             cartFlatDTO.setUserId(user.getId());
             cartFlatDTO.setProductId(cartItem.getProduct().getId());
             cartFlatDTO.setProductImage(cartItem.getProduct().getImage());

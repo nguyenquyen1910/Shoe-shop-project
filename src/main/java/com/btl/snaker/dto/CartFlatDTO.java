@@ -2,6 +2,7 @@ package com.btl.snaker.dto;
 
 public class CartFlatDTO {
     private Long id;
+    private Long cartItemId;
     private Long userId;
     private Long productId;
     private String productImage;
@@ -19,6 +20,14 @@ public class CartFlatDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getCartItemId() {
+        return cartItemId;
+    }
+
+    public void setCartItemId(Long cartItemId) {
+        this.cartItemId = cartItemId;
     }
 
     public Long getUserId() {
